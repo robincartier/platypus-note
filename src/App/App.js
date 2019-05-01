@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from 'images/logo.svg';
 import './App.css';
 import Editor from './Editor';
 import Header from './Header';
@@ -13,11 +12,12 @@ function App() {
         <Header/>
       </header>
 
-      <nav>
-        <Menu/>
-      </nav>
-
       <div className="Page">
+
+        <nav className="Menu">
+          <Menu/>
+        </nav>
+
         <div className="Note-list">
           <List/>
         </div>
