@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
 function Menu() {
-  return (
-    <p>
+    return (
+        <p>
         Menu
-    </p>
-  );
+        </p>
+    );
 }
 
 export default Menu;

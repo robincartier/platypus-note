@@ -1,0 +1,14 @@
+{   
+    "parser": "babel-eslint",
+    "plugins": ["react"],
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended"
+    ],
+    "rules": {
+        "no-trailing-spaces": "error", 
+        "indent": ["error", 4], 
+        "quotes": ["error", "double"],
+        "semi": ["error", "always"]
+    } 
+} 
