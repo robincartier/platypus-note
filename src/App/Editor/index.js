@@ -1,6 +1,8 @@
 import React from "react";
+import { Box, Markdown, TextArea, Text} from "grommet";
 import "./Editor.css";
 import marked from "marked";
+import styled from "styled-components";
 
 marked.setOptions({
     renderer: new marked.Renderer(),
@@ -14,61 +16,59 @@ marked.setOptions({
     xhtml: false
 });
 
-function Line(props) {
+const StyledPre = styled.pre`
+  background-color: #7d4cdb;
+`;
+
+function Paragraph(props) {
     return (
-        <React.Fragment>
-            <div onClick={props.onClick}>
-                {props.value}
-            </div>
-        </React.Fragment>
+        <Box onClick={props.onClick}>
+            { (props.isSelected) ?
+                <TextArea value={props.value} onChange={props.onChange} /> :
+                <Markdown components={{ pre: StyledPre }} >{props.value}</Markdown>
+            }
+        </Box>
     );
 }
 class InputEditor extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            lines: ["test", "test2"],
+            lines: ["test", "test2", "test\n\ntest\n\naaaaaa", "test2", "test", "test2", "test", "test2", "test", "test2"],
             editedLine: null,
         };
-        this.handleClick = this.handleClick.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+        this.onChange = this.onChange.bind(this);
     }
 
-    handleClick(i) {
-        this.setState({editedLine: i});
-        // this.setState({lines: l});
-        return;
-    }
-
-    handleChange(event) {
+    onChange(event) {
         const lines = this.state.lines;
-        const i = event.target.id;
+        const i = this.state.editedLine;
         lines[i] = event.target.value;
         this.setState({lignes: lines});
     }
 
+    onClick(i) {
+        this.setState({editedLine: i});
+    }
+
     preRender() {
         return this.state.lines.map((line, i) => {
-            const v = (this.state.editedLine === i)
-                ? <input value={line} id={i} onChange={this.handleChange}/>
-                : <div dangerouslySetInnerHTML={{ __html: marked(line) }} />;
-            console.log(marked(line));
-            return (
-                <Line
-                    key={i}
-                    value={v}
-                    onClick={() => this.handleClick(i)}
-                />
-            );
+            return <Paragraph
+                onClick={() => this.onClick(i)}
+                onChange={this.onChange}
+                key={i}
+                value={line}
+                isSelected = {this.state.editedLine === i}
+            />;
         });
     }
 
     render() {
         return (
-            <React.Fragment>
+            <div className="editable">
                 <p>Type your note ...</p>
                 {this.preRender()}
-            </React.Fragment>
+            </div>
         );
     }
 }
@@ -77,9 +77,7 @@ function Editor() {
     return (
         <React.Fragment>
             <p>Editor</p>
-            <div className="editable">
-                <InputEditor/>
-            </div>
+            <InputEditor/>
         </React.Fragment>
     );
 }
