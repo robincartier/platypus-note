@@ -67,14 +67,7 @@ function App() {
                                 <List/>
                             </Box>
 
-                            <Box
-                                flex
-                                elevation='small'
-                                align='center'
-                                justify='center'
-                            >
-                                <Editor/>
-                            </Box>
+                            <Editor/>
                         </Box>
                     </Box>
                 </Box>
