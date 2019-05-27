@@ -24,10 +24,10 @@ function Paragraph(props) {
     return (
         // TODO: box with the size of the MD Text inside
         <Box onClick={props.onClick}
-            height={props.height ? props.height + "px" : "auto"}
+            // height={props.height ? props.height + "px" : "auto"}
         >
             { (props.isSelected) ?
-                <TextArea value={props.value} onChange={props.onChange} fill={true} plain resize={false}/> :
+                <TextArea value={props.value} onChange={props.onChange} onBlur={props.onBlur} fill={true} plain resize={false}/> :
                 <Markdown components={{ pre: StyledPre }} >{props.value}</Markdown>
             }
         </Box>
@@ -39,11 +39,15 @@ class InputEditor extends React.Component {
         this.state = {
             lines: ["# Et bona frustra meritis\n## Dentes in tellure",
                 "Lorem markdownum *dato*; docti *grege cognoscendus* ullum. Et hic, mirabere\nvero; accipe mente, quod nil. Precibusque patris leniat iniqua exsultantemque\n> Inque et coruscant quae potentia adventum **leves**, mens caecae, collabitur.\n> Nomenque potentia orbis, et sumus praecordiaque haud.", "__test__\n\ntest\n\naaaaaa", "test2", "test", "test2", "test", "test2", "test", "test2",
+                "1. Clangore silva epota neque labitur\n2. Modo malis\n3. Cupidine peti undis Xanthos parum", "_test2_",
+                "# Et bona frustra meritis\n## Dentes in tellure",
+                "Lorem markdownum *dato*; docti *grege cognoscendus* ullum. Et hic, mirabere\nvero; accipe mente, quod nil. Precibusque patris leniat iniqua exsultantemque\n> Inque et coruscant quae potentia adventum **leves**, mens caecae, collabitur.\n> Nomenque potentia orbis, et sumus praecordiaque haud.", "__test__\n\ntest\n\naaaaaa", "test2", "test", "test2", "test", "test2", "test", "test2",
                 "1. Clangore silva epota neque labitur\n2. Modo malis\n3. Cupidine peti undis Xanthos parum", "_test2_"],
             editedLine: null,
             heights: []
         };
         this.onChange = this.onChange.bind(this);
+        this.onBlur = this.onBlur.bind(this);
     }
 
     onChange(event) {
@@ -51,6 +55,11 @@ class InputEditor extends React.Component {
         const i = this.state.editedLine;
         lines[i] = event.target.value;
         this.setState({lignes: lines});
+    }
+
+    onBlur() {
+        console.log("blur");
+        this.setState({editedLine: null});
     }
 
     onClick(event, i) {
@@ -65,6 +74,7 @@ class InputEditor extends React.Component {
             return <Paragraph
                 onClick={(event) => this.onClick(event, i)}
                 onChange={this.onChange}
+                onBlur={this.onBlur}
                 key={i}
                 value={line}
                 height={this.state.heights[i]}
@@ -75,36 +85,25 @@ class InputEditor extends React.Component {
 
     render() {
         return (
-            <Box>
-                <p>Type your note ...</p>
-                {this.preRender()}
-            </Box>
+            <React.Fragment>
+                <div className="Editor-content">
+                    {this.preRender()}
+                </div>
+            </React.Fragment>
         );
     }
 }
 
 function Editor() {
     return (
-        <Box
-            flex
-            elevation='small'
-        >
-            <Box
-                align="center"
-            >
-                <p>Editor</p>
-            </Box>
-            <Box
-                direction='column'
-                flex
-                overflow={{ horizontal: "hidden", vertical: "scroll" }}
-                height="small"
-                pad="medium"
-                // border={{ size: "medium", style: "solid" }}
-            >
+        <React.Fragment>
+            <div className="Editor">
+                <div className="Editor-title">
+                    <p>Editor</p>
+                </div>
                 <InputEditor/>
-            </Box>
-        </Box>
+            </div>
+        </React.Fragment>
     );
 }
 
