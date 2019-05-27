@@ -1,9 +1,5 @@
 import React from "react";
-import {
-    Box,
-    Grommet,
-} from "grommet";
-import "./App.css";
+import "./App.scss";
 import Editor from "./Editor";
 import Header from "./Header";
 import List from "./List";
