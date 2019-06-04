@@ -1,11 +1,12 @@
-import React from 'react';
+import React from "react";
+import "./List.css";
 
 function List() {
-  return (
-    <p>
-        List
-    </p>
-  );
+    return (
+        <div className="List">
+            <p>List</p>
+        </div>
+    );
 }
 
 export default List;
