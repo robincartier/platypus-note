@@ -1,33 +1,29 @@
-import React from 'react';
-import './App.css';
-import Editor from './Editor';
-import Header from './Header';
-import List from './List';
-import Menu from './Menu';
+import React from "react";
+import "./App.scss";
+import Editor from "./Editor";
+import Header from "./Header";
+import List from "./List";
+import Menu from "./Menu";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <Header/>
-      </header>
+    return (
+        <div className="App">
+            <header className="App-header">
+                <Header/>
+            </header>
 
-      <div className="Page">
+            <div className="Page">
 
-        <nav className="Menu">
-          <Menu/>
-        </nav>
+                <nav className="Menu">
+                    <Menu/>
+                </nav>
 
-        <div className="Note-list">
-          <List/>
+                <List/>
+
+                <Editor/>
+            </div>
         </div>
-
-        <div className="Editor">
-          <Editor/>
-        </div>
-      </div>
-    </div>
-  );
+    );
 }
 
 export default App;
