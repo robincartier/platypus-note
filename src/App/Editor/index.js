@@ -73,10 +73,10 @@ class InputEditor extends React.Component {
     }
 
     onBlur() {
-        // const values = this.state.values.slice();
-        // const i = this.state.editedLine;
-        // this.checkInput(values, i);
-        // this.setState({editedLine: null, values: values});
+        const values = this.state.values.slice();
+        const i = this.state.editedLine;
+        this.checkInput(values, i);
+        this.setState({editedLine: null, values: values});
     }
 
     onKeyPress(event) {
