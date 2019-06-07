@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.scss";
-import Editor from "./Editor";
+import InputEditor from "../containers/Editor";
 import Header from "./Header";
 import List from "./List";
 import Menu from "./Menu";
@@ -20,7 +20,7 @@ function App() {
 
                 <List/>
 
-                <Editor/>
+                <InputEditor/>
             </div>
         </div>
     );
