@@ -54,15 +54,17 @@ class Editor extends React.Component {
 
         // if two consecutive linebreaks at the end, go to new value
         if (event.target.value.match(/\S*\n\n$/g)) {
+            this.checkInput(this.props.paragraphs, this.state.editedLine);
             this.props.addParagraph(this.state.editedLine + 1);
             // TODO: deal with size of new line !!
-            this.setState({editedLine: this.state.editedLine + 1, editedLineHeight: null});
+            this.setState({editedLine: this.state.editedLine + 1, editedLineHeight: "auto"});
         }
         // if two consecutive linebreaks at the beginning, go to new value
         if (event.target.value.match(/^\n\n\S*/g)) {
+            this.checkInput(this.props.paragraphs, this.state.editedLine);
             this.props.addParagraph(this.state.editedLine);
             // TODO: deal with size of new line !!
-            this.setState({editedLine: this.state.editedLine, editedLineHeight: null});
+            this.setState({editedLine: this.state.editedLine, editedLineHeight: "auto"});
         }
     }
 
@@ -79,9 +81,15 @@ class Editor extends React.Component {
         }
         // Ctrl + Enter --> go to new value
         if(event.key === "Enter" && event.ctrlKey){
+            this.checkInput(this.props.paragraphs, this.state.editedLine);
             this.props.addParagraph(this.state.editedLine + 1);
-            // TODO: deal with size of new line !!
-            this.setState({editedLine: this.state.editedLine + 1, editedLineHeight: null});
+            this.setState({editedLine: this.state.editedLine + 1, editedLineHeight: "auto"});
+            return;
+        }
+        // console.log(event.key, event.ctrlKey, event.metaKey);
+        //  Ctrl + Enter --> go to new value
+        if(event.key === "z" && event.ctrlKey){
+            console.log("undo");
         }
     }
 

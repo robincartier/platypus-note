@@ -1,8 +1,8 @@
-/* eslint-disable indent */
+import undoable, { distinctState } from "redux-undo";
 import { ADD_PARAGRAPH, SET_PARAGRAPH, DELETE_PARAGRAPH } from "actions";
 
 const defaultText = ["# Et bona frustra meritis\n## Dentes in tellure",
-    "Lorem markdownum *dato*; docti *grege cognoscendus* ullum. Et hic, mirabere\nvero; accipe mente, quod nil. Precibusque patris leniat iniqua exsultantemque\n> Inque et coruscant quae potentia adventum **leves**, mens caecae, collabitur.\n> Nomenque potentia orbis, et sumus praecordiaque haud.", "__test__\n\ntest\n\naaaaaa", "test2", "test", "test2", "test", "test2", "test", "test2",
+    "Lorem markdownum *dato*; docti *grege cognoscendus* ullum. Et hic, mirabere\nvero; accipe mente, quod nil. Precibusque patris leniat iniqua exsultantemque\n> Inque et coruscant quae potentia adventum **leves**, mens caecae, collabitur.\n> Nomenque potentia orbis, et   sumus praecordiaque haud.", "__test__\n\ntest\n\naaaaaa", "test2", "test", "test2", "test", "test2", "test", "test2",
     "1. Clangore silva epota neque labitur\n2. Modo malis\n3. Cupidine peti undis Xanthos parum", "_test2_",
     "# Et bona frustra meritis\n## Dentes in tellure",
     "Lorem markdownum *dato*; docti *grege cognoscendus* ullum. Et hic, mirabere\nvero; accipe mente, quod nil. Precibusque patris leniat iniqua exsultantemque\n> Inque et coruscant quae potentia adventum **leves**, mens caecae, collabitur.\n> Nomenque potentia orbis, et sumus praecordiaque haud.", "__test__\n\ntest\n\naaaaaa", "test2", "test", "test2", "test", "test2", "test", "test2",
@@ -23,13 +23,18 @@ const paragraphs = (state = defaultText, action) => {
                 ...state.slice(action.index),
             ];
         case DELETE_PARAGRAPH:
-                return [
-                    ...state.slice(0, action.index),
-                    ...state.slice(action.index + 1),
-                ];
+            return [
+                ...state.slice(0, action.index),
+                ...state.slice(action.index + 1),
+            ];
         default:
             return state;
     }
 };
 
-export default paragraphs;
+const undoableParagraphs = undoable(paragraphs, {
+    filter: distinctState()
+});
+
+
+export default undoableParagraphs;
